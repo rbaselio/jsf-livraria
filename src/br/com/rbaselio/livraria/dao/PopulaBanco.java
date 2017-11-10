@@ -1,9 +1,7 @@
 package br.com.rbaselio.livraria.dao;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.EntityManager;
 
@@ -76,22 +74,19 @@ public class PopulaBanco {
 		Livro livro = new Livro();
 		livro.setIsbn(isbn);
 		livro.setTitulo(titulo);
-		livro.setDataLancamento(data);
+		livro.setDataLancamento(parseData(data));
 		livro.setPreco(preco);
 		livro.adicionaAutor(autor);
 		return livro;
 	}
 
 	@SuppressWarnings("unused")
-	private static Calendar parseData(String data) {
-		try {
-			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(data);
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(date);
-			return calendar;
-		} catch (ParseException e) {
-			throw new IllegalArgumentException(e);
-		}
+	private static LocalDate parseData(String data) {
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    return LocalDate.parse(data,formatter);			
+			
+		
 	}
 
 }

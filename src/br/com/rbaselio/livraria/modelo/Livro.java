@@ -1,5 +1,7 @@
 package br.com.rbaselio.livraria.modelo;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Livro {
+public class Livro implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5949873384732086160L;
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +27,19 @@ public class Livro {
 	private String titulo;
 	private String isbn;
 	private double preco;
-	private String dataLancamento;
+	
+	
+	
+    private LocalDate dataLancamento = LocalDate.now();
+
+	public LocalDate getDataLancamento() {
+		System.out.println(dataLancamento);
+		return dataLancamento;
+	}
+
+	public void setDataLancamento(LocalDate dataLancamento) {
+		this.dataLancamento = dataLancamento;
+	}
 
 	@ManyToMany
 	private List<Autor> autores = new ArrayList<Autor>();
@@ -67,12 +87,5 @@ public class Livro {
 		this.preco = preco;
 	}
 
-	public String getDataLancamento() {
-		return dataLancamento;
-	}
-
-	public void setDataLancamento(String dataLancamento) {
-		this.dataLancamento = dataLancamento;
-	}
-
+	
 }
