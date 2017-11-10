@@ -30,10 +30,9 @@
 				<h:inputText id="preco" value="#{livroBean.livro.preco}" />
 
 				<h:outputLabel value="Data de Lançamento:" for="dataLancamento" />
-				<h:inputText id="dataLancamento"	value="#{livroBean.livro.dataLancamento}" pattern="dd/MM/yyyy" mask="true" converter="localDateConverter" style="width: 100%;"/>
-						
-					
-				
+				<h:inputText id="dataLancamento"
+					value="#{livroBean.livro.dataLancamento}" pattern="dd/MM/yyyy"
+					mask="true" converter="localDateConverter" style="width: 100%;" />
 
 			</h:panelGrid>
 
@@ -58,6 +57,7 @@
 		</fieldset>
 
 		<h:commandButton value="Gravar" action="#{livroBean.gravar}" />
+
 	</h:form>
 </h:body>
 

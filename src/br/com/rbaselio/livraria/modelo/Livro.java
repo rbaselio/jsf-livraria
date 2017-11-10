@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,21 +29,21 @@ public class Livro implements Serializable{
 	private String isbn;
 	private double preco;
 	
-	
-	
+	//@Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate dataLancamento = LocalDate.now();
+	
+	@ManyToMany
+	private List<Autor> autores = new ArrayList<Autor>();
 
 	public LocalDate getDataLancamento() {
-		System.out.println(dataLancamento);
 		return dataLancamento;
-	}
+	}	
 
 	public void setDataLancamento(LocalDate dataLancamento) {
 		this.dataLancamento = dataLancamento;
 	}
 
-	@ManyToMany
-	private List<Autor> autores = new ArrayList<Autor>();
+	
 
 	public List<Autor> getAutores() {
 		return autores;

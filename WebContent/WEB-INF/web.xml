@@ -14,10 +14,7 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
-<!-- 	<context-param> -->
-<!-- 		<param-name>facelets.LIBRARIES</param-name> -->
-<!-- 		<param-value>/META-INF/LocalDateConverter-taglib.xml</param-value> -->
-<!-- 	</context-param> -->
+
 
 
 </web-app>

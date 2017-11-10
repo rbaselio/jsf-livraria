@@ -12,6 +12,11 @@ public class PopulaBanco {
 
 	public static void main(String[] args) {
 
+		popular();
+
+	}
+
+	public static void popular() {
 		EntityManager em = new JPAUtil().getEntityManager();
 
 		em.getTransaction().begin();
@@ -60,7 +65,6 @@ public class PopulaBanco {
 
 		em.getTransaction().commit();
 		em.close();
-
 	}
 
 	private static Autor geraAutor(String nome) {
@@ -80,7 +84,6 @@ public class PopulaBanco {
 		return livro;
 	}
 
-	@SuppressWarnings("unused")
 	private static LocalDate parseData(String data) {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

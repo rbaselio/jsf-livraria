@@ -20,7 +20,7 @@ public class DAO<T> {
 
 		// abre transacao
 		em.getTransaction().begin();
-
+		
 		// persiste o objeto
 		em.persist(t);
 

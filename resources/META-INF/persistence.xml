@@ -5,9 +5,9 @@
 	version="2.0">
 
 
-	<persistence-unit name="livraria" transaction-type="RESOURCE_LOCAL">
-
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+	<persistence-unit name="livraria" >
+		
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
 		<class>br.com.rbaselio.livraria.modelo.Livro</class>
 		<class>br.com.rbaselio.livraria.modelo.Autor</class>
