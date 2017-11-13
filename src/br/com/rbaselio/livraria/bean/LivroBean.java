@@ -68,5 +68,8 @@ public class LivroBean implements Serializable {
 			throw new ValidatorException(new FacesMessage("Deveria começar com 1"));
 		}
 	}
+	
+	
+	
 
 }

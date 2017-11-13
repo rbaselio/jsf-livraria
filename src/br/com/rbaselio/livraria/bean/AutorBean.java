@@ -3,9 +3,9 @@ package br.com.rbaselio.livraria.bean;
 import javax.faces.bean.ManagedBean;
 
 import br.com.rbaselio.livraria.dao.DAO;
-import br.com.rbaselio.livraria.dao.PopulaBanco;
 import br.com.rbaselio.livraria.modelo.Autor;
 
+@SuppressWarnings("unused")
 @ManagedBean(name = "autorBean")
 public class AutorBean {
 
