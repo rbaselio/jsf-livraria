@@ -4,6 +4,7 @@ import javax.faces.bean.ManagedBean;
 
 import br.com.rbaselio.livraria.dao.DAO;
 import br.com.rbaselio.livraria.modelo.Autor;
+import br.com.rbaselio.livraria.util.RedirectView;
 
 @SuppressWarnings("unused")
 @ManagedBean(name = "autorBean")
@@ -15,12 +16,11 @@ public class AutorBean {
 		return autor;
 	}
 
-	public void gravar() {
-		System.out.println("Gravando autor " + this.autor.getNome());
-
+	public RedirectView  gravar() {
 		new DAO<Autor>(Autor.class).adiciona(this.autor);
 		this.autor = new Autor();
+		return new RedirectView ("livro");
+
 	}
-	
-	
+
 }

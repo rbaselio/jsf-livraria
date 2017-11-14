@@ -1,4 +1,4 @@
-package br.com.rbaselio.livraria.modelo;
+package br.com.rbaselio.livraria.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,19 +12,11 @@ import javax.faces.convert.FacesConverter;
 public class LocalDateConverter implements Converter<LocalDate> {
 
 	public LocalDate getAsObject(FacesContext context, UIComponent component, String value) {
-
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate localDate = LocalDate.parse(value, formatter);
-		System.out.println("LocalDateConverter: Return Object - " + localDate);
-		return localDate;
-
+		return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd/MM/yyyy"));		
 	}
 
 	public String getAsString(FacesContext context, UIComponent component, LocalDate value) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		String s = value.format(formatter);
-		System.out.println("LocalDateConverter: Return String - " + s);
-		return s;
+		return value.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));		
 	}
 
 }

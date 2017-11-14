@@ -13,6 +13,7 @@ import javax.faces.validator.ValidatorException;
 import br.com.rbaselio.livraria.dao.DAO;
 import br.com.rbaselio.livraria.modelo.Autor;
 import br.com.rbaselio.livraria.modelo.Livro;
+import br.com.rbaselio.livraria.util.RedirectView;
 
 @ManagedBean(name = "livroBean")
 @ViewScoped
@@ -53,23 +54,28 @@ public class LivroBean implements Serializable {
 
 	}
 
+	public RedirectView formAutor() {
+		System.out.println("Chamanda o formulario do Autor");
+		return new RedirectView("autor");
+	}
+
 	public void gravar() {
 		if (livro.getAutores().isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um Autor"));
+			FacesContext.getCurrentInstance().addMessage("autor",
+					new FacesMessage("Livro deve ter pelo menos um Autor"));
 			return;
 		}
 		new DAO<Livro>(Livro.class).adiciona(this.livro);
 	}
 
-	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
-		
+	public void comecaComDigitoUm(FacesContext fc, UIComponent component,
+			Object value) throws ValidatorException {
+
 		String valor = value.toString();
 		if (!valor.startsWith("1")) {
-			throw new ValidatorException(new FacesMessage("Deveria começar com 1"));
+			throw new ValidatorException(new FacesMessage(
+					"Deveria começar com 1"));
 		}
 	}
-	
-	
-	
 
 }
