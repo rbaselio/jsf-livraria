@@ -20,9 +20,14 @@ import br.com.rbaselio.livraria.util.RedirectView;
 public class LivroBean implements Serializable {
 
 	private static final long serialVersionUID = 2279386244429111128L;
-
+	
+	
 	private Livro livro = new Livro();
 	private Integer autorID;
+	
+	public List<Livro> getLivros() {
+		return new DAO<Livro>(Livro.class).listaTodos();
+	}
 
 	public Integer getAutorID() {
 		return autorID;
@@ -43,6 +48,9 @@ public class LivroBean implements Serializable {
 	public List<Autor> getAutoresDoLivro() {
 		return this.getLivro().getAutores();
 	}
+	public void removerAutorDoLivro(Autor autor) {
+	    this.livro.removeAutor(autor);
+	}
 
 	public Livro getLivro() {
 		return livro;
@@ -50,7 +58,7 @@ public class LivroBean implements Serializable {
 
 	public void gravarAutor() {
 		Autor autor = new DAO<Autor>(Autor.class).buscaPorId(this.autorID);
-		livro.adicionaAutor(autor);
+		this.livro.adicionaAutor(autor);
 
 	}
 
@@ -65,7 +73,24 @@ public class LivroBean implements Serializable {
 					new FacesMessage("Livro deve ter pelo menos um Autor"));
 			return;
 		}
-		new DAO<Livro>(Livro.class).adiciona(this.livro);
+		if (this.livro.getId() == null) {
+	        new DAO<Livro>(Livro.class).adiciona(this.livro);        
+	    } else {
+	        new DAO<Livro>(Livro.class).atualiza(this.livro);
+	    }
+	    this.livro = new Livro();		
+		
+	}
+	
+	public void carregar(Livro livro) {
+	    System.out.println("Carregando livro " + livro.getTitulo());
+	    this.livro = livro;
+	}
+	
+	
+	public void remover(Livro livro) {
+	    System.out.println("Removendo livro " + livro.getTitulo());
+	    new DAO<Livro>(Livro.class).remove(livro);
 	}
 
 	public void comecaComDigitoUm(FacesContext fc, UIComponent component,
