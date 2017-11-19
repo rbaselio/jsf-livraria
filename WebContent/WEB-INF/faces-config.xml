@@ -8,6 +8,7 @@
 
     
     <lifecycle>
+    <phase-listener>br.com.rbaselio.livraria.util.Autorizador</phase-listener>
     <phase-listener>br.com.rbaselio.livraria.util.LogPhaseListener</phase-listener>
 </lifecycle>
 

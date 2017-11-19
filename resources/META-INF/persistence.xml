@@ -11,6 +11,7 @@
 		
 		<class>br.com.rbaselio.livraria.modelo.Livro</class>
 		<class>br.com.rbaselio.livraria.modelo.Autor</class>
+		<class>br.com.rbaselio.livraria.modelo.Usuario</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
