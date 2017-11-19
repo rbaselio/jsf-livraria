@@ -18,40 +18,56 @@ import br.com.rbaselio.livraria.util.RedirectView;
 public class AutorBean {
 
 	private Autor autor = new Autor();
+	private Integer autorId;
+
+	public Integer getAutorId() {
+		return autorId;
+	}
+
+	public void setAutorId(Integer autorId) {
+		this.autorId = autorId;
+	}
 
 	public Autor getAutor() {
 		return autor;
 	}
 
-	public RedirectView  gravar() {
-		
-		if (this.autor.getId() == null) {
-	        new DAO<Autor>(Autor.class).adiciona(this.autor);        
-	    } else {
-	        new DAO<Autor>(Autor.class).atualiza(this.autor);
-	    }
-		this.autor = new Autor();
-		return new RedirectView ("livro");
+	public RedirectView gravar() {
 
+		if (this.autor.getId() == null) {
+			new DAO<Autor>(Autor.class).adiciona(this.autor);
+		} else {
+			new DAO<Autor>(Autor.class).atualiza(this.autor);
+		}
+		this.autor = new Autor();
+		return new RedirectView("livro");
 	}
 	
+	public void carregaPelaId() {
+	   this.autor = new DAO<Autor>(Autor.class).buscaPorId(autorId);
+	   
+	}
+
 	public void carregar(Autor autor) {
-	    System.out.println("Carregando livro " + autor.getNome());
-	    this.autor = autor;
+		System.out.println("Carregando livro " + autor.getNome());
+		this.autor = autor;
 	}
-	
+
 	public void remover(Autor autor) {
-	    System.out.println("Removendo livro " + autor.getNome());
-	    
-	    try{
-	    	new DAO<Autor>(Autor.class).remove(autor);
-	    }
-	    catch(Exception e){
-	    	FacesContext.getCurrentInstance().addMessage("autor",
-					new FacesMessage("Autor atribuido a um livro, não pode ser removido"));			
-	    }
+		System.out.println("Removendo livro " + autor.getNome());
+
+		try {
+			new DAO<Autor>(Autor.class).remove(autor);
+		} catch (Exception e) {
+			FacesContext
+					.getCurrentInstance()
+					.addMessage(
+							"autor",
+							new FacesMessage(
+									"Autor atribuido a um livro, não pode ser removido"));
+		}
 	}
-	
+
 	public List<Autor> getAutores() {
 		return new DAO<Autor>(Autor.class).listaTodos();
 	}
