@@ -64,13 +64,12 @@
 			<artifactId>jboss-transaction-api_1.1_spec</artifactId>
 			<version>1.0.1.Final</version>
 		</dependency>
-
-
-
-
-
-
-
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>6.1</version>
+		</dependency>
+		
+		
 	</dependencies>
-
 </project>

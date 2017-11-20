@@ -1,9 +1,18 @@
 package br.com.rbaselio.livraria.dao;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.primefaces.model.SortOrder;
 
 public class DAO<T> {
 
@@ -20,7 +29,7 @@ public class DAO<T> {
 
 		// abre transacao
 		em.getTransaction().begin();
-		
+
 		// persiste o objeto
 		em.persist(t);
 
@@ -78,16 +87,49 @@ public class DAO<T> {
 		return (int) result;
 	}
 
-	public List<T> listaTodosPaginada(int firstResult, int maxResults) {
+	public List<T> listaTodosPaginada(int inicio, int quantidade,
+			String campoOrdenacao, SortOrder sentidoOrdenacao,
+			Map<String, Object> filtros) {
+		
 		EntityManager em = new JPAUtil().getEntityManager();
-		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
-		query.select(query.from(classe));
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<T> query = cb.createQuery(classe);
 
-		List<T> lista = em.createQuery(query).setFirstResult(firstResult)
-				.setMaxResults(maxResults).getResultList();
+		Root<T> root = query.from(classe);
+		
+		List<Predicate> predicates = new ArrayList<>();
+
+		if (filtros != null) {
+			for (Entry<String, Object> entry : filtros.entrySet()) {				
+				predicates.add(cb.like(root.<String> get(entry.getKey()), "%" + entry.getValue() + "%"));
+			}
+			query.where((Predicate[]) predicates.toArray(new Predicate[0]));
+		}
+		
+		if (campoOrdenacao != null) {
+			Order asc;
+			if (sentidoOrdenacao == SortOrder.ASCENDING) {
+				asc = cb.asc(root.get(campoOrdenacao));
+			} else
+				asc = cb.desc(root.get(campoOrdenacao));
+			query = query.orderBy(asc);
+		}
+
+		List<T> lista = em.createQuery(query).setFirstResult(inicio)
+				.setMaxResults(quantidade).getResultList();
 
 		em.close();
 		return lista;
+	}
+
+	public int quantidadeDeElementos() {
+		EntityManager em = new JPAUtil().getEntityManager();
+		long result = (Long) em.createQuery(
+				"select count(n) from " + classe.getSimpleName() + " n")
+				.getSingleResult();
+		em.close();
+
+		return (int) result;
 	}
 
 }

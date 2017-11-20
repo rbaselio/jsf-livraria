@@ -9,7 +9,7 @@ public class Encriptador {
 	private static byte[] digest;
 
 	public static String toSHA(String convertme, String tipo) {
-		
+
 		try {
 			md = MessageDigest.getInstance(tipo);
 			md.reset();
@@ -21,8 +21,7 @@ public class Encriptador {
 		}
 		String hexStr = "";
 		for (int i = 0; i < digest.length; i++) {
-			hexStr += Integer.toString((digest[i] & 0xff) + 0x100, 16)
-					.substring(1);
+			hexStr += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1);
 		}
 		return hexStr;
 

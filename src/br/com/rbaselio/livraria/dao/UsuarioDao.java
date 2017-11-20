@@ -15,9 +15,8 @@ public class UsuarioDao {
 										+ "u.senha = :pSenha", Usuario.class);
 		
 		query.setParameter("pEmail", usuario.getEmail());
-	    query.setParameter("pSenha", usuario.getSenha());
+	    query.setParameter("pSenha", usuario.getSenha());    
 	    
-	    System.out.println("CRIPTOGRAFIA " + usuario.getSenha());
 	    
 	    try {
 	    	usuario = query.getSingleResult();	    	

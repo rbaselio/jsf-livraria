@@ -12,7 +12,7 @@ import br.com.rbaselio.livraria.modelo.Autor;
 import br.com.rbaselio.livraria.modelo.Livro;
 import br.com.rbaselio.livraria.util.RedirectView;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({ "unused", "deprecation" })
 @ManagedBean(name = "autorBean")
 @ViewScoped
 public class AutorBean {
@@ -32,7 +32,7 @@ public class AutorBean {
 		return autor;
 	}
 
-	public RedirectView gravar() {
+	public void gravar() {
 
 		if (this.autor.getId() == null) {
 			new DAO<Autor>(Autor.class).adiciona(this.autor);
@@ -40,31 +40,23 @@ public class AutorBean {
 			new DAO<Autor>(Autor.class).atualiza(this.autor);
 		}
 		this.autor = new Autor();
-		return new RedirectView("livro");
+		// return null;
 	}
-	
+
 	public void carregaPelaId() {
-	   this.autor = new DAO<Autor>(Autor.class).buscaPorId(autorId);
-	   
+		this.autor = new DAO<Autor>(Autor.class).buscaPorId(autorId);
+
 	}
 
 	public void carregar(Autor autor) {
-		System.out.println("Carregando livro " + autor.getNome());
 		this.autor = autor;
 	}
 
 	public void remover(Autor autor) {
-		System.out.println("Removendo livro " + autor.getNome());
-
 		try {
 			new DAO<Autor>(Autor.class).remove(autor);
 		} catch (Exception e) {
-			FacesContext
-					.getCurrentInstance()
-					.addMessage(
-							"autor",
-							new FacesMessage(
-									"Autor atribuido a um livro, não pode ser removido"));
+			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Autor atribuido a um livro, não pode ser removido"));
 		}
 	}
 

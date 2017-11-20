@@ -9,6 +9,7 @@ import br.com.rbaselio.livraria.dao.UsuarioDao;
 import br.com.rbaselio.livraria.modelo.Usuario;
 import br.com.rbaselio.livraria.util.RedirectView;
 
+@SuppressWarnings("deprecation")
 @ManagedBean
 @ViewScoped
 public class LoginBean {
@@ -20,8 +21,6 @@ public class LoginBean {
 	}
 
 	public RedirectView efetuaLogin() {
-		System.out.println("Fazendo login do usuário "+ this.usuario.getEmail());		
-		
 		this.usuario = new UsuarioDao().existe(this.usuario);
 		FacesContext context = FacesContext.getCurrentInstance();
 		if(usuario != null ) {			

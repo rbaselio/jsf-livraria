@@ -27,8 +27,9 @@ public class Livro implements Serializable {
 	private String titulo;
 	private String isbn;
 	private double preco;
+	private String genero;
 
-	// @Convert(converter = LocalDateAttributeConverter.class)
+	
 	private LocalDate dataLancamento = LocalDate.now();
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -87,6 +88,14 @@ public class Livro implements Serializable {
 
 	public void removeAutor(Autor autor) {
 		this.autores.remove(autor);
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
 
 }
