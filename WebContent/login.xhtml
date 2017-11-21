@@ -19,7 +19,7 @@
 						<f:passThroughAttribute name="type" value="email" />
 					</p:inputText>
 					<p:outputLabel value="Senha:" for="senha" />
-					<p:password id="senha" value="#{loginBean.usuario.senha}" required="true" feedback="true"/>
+					<p:password id="senha" value="#{loginBean.usuario.senha}" required="true"/>
 					<p:commandButton value="Efetuar Login" action="#{loginBean.efetuaLogin}" update="@form" process="@form"/>
 				</p:panelGrid>
 			</p:fieldset>

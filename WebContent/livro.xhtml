@@ -14,9 +14,8 @@
 			<f:viewAction action="#{livroBean.carregaPelaId}" if="#{param['livroId'] != null}" />
 		</f:metadata>
 
-
 		<ui:define name="titulo">
-           		Novo Livro
+           		<h1>Novo Livro</h1>
    		</ui:define>
 		<ui:define name="conteudo">
 
@@ -27,7 +26,6 @@
 					<p:messages id="messages" />
 
 					<h:panelGrid columns="2">
-
 						<p:outputLabel value="Titulo:" for="titulo" />
 						<p:inputText id="titulo" value="#{livroBean.livro.titulo}" required="true"
 							requiredMessage="Titulo obrigatorio" validatorMessage="Título não pode ser superior a 40">
@@ -36,7 +34,7 @@
 						</p:inputText>
 
 						<p:outputLabel value="Gênero:" for="genero" />
-						<p:selectOneMenu value="#{livroBean.livro.genero}" id="genero">
+						<p:selectOneMenu value="#{livroBean.livro.genero}" id="genero" style="width:80%;">
 							<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
 							<f:selectItems value="#{livroBean.generos}" />
 						</p:selectOneMenu>
@@ -64,7 +62,7 @@
 				<p:fieldset legend="Dados do Autor">
 					<h:panelGrid columns="4">
 						<p:outputLabel value="Selecione Autor:" for="autor" />
-						<p:selectOneMenu id="autor" value="#{livroBean.autorID}">
+						<p:selectOneMenu id="autor" value="#{livroBean.autorID}" style="width:80%;">
 							<f:selectItems value="#{livroBean.autores}" var="autor" itemLabel="#{autor.nome}"
 								itemValue="#{autor.id}" />
 						</p:selectOneMenu>
@@ -79,8 +77,7 @@
 						<p:column>
 							<p:commandLink styleClass="fa fa-fw fa-remove"
 								action="#{livroBean.removerAutorDoLivro(autor)}" update="tabelaAutores" process="@this" />
-						</p:column>
-						<p:column>
+							 - 
 							<h:outputText value="#{autor.nome}" />
 						</p:column>
 
@@ -93,43 +90,41 @@
 			<br />
 			<h:form id="tabelaLivros">
 				<p:dataTable value="#{livroBean.livroDataModel}" var="livro" id="tabelaLivros" paginator="true"
-					rows="5" lazy="true" widgetVar="tabelaLivros">
+					rows="5" lazy="true" widgetVar="tabelaLivros" tableStyle="table-layout: auto;" >
 					<f:facet name="header">Tabela de Livros</f:facet>
 					<p:column headerText="Titulo" sortBy="#{livro.titulo}" filterBy="#{livro.titulo}"
-						filterMatchMode="contains">
+						filterStyle="width:95%" >
+
+						<p:commandLink update="livros" process="@this" styleClass="fa fa-fw fa-edit"
+							action="#{livroBean.setLivro(livro)}" />
+						<p:commandLink action="#{livroBean.remover(livro)}" update="tabelaLivros" process="@this"
+							styleClass="fa fa-fw fa-remove" />					
+						 - 
 						<h:outputText value="#{livro.titulo}" />
 					</p:column>
 					<p:column headerText="Gênero" sortBy="#{livro.genero}" filterBy="#{livro.genero}"
-						filterMatchMode="startsWith">
+						>
 						<f:facet name="filter">
-							<p:selectOneMenu onchange="PF('tabelaLivros').filter()">
+							<p:selectOneMenu onchange="PF('tabelaLivros').filter()" style="width:80%;">
 								<f:selectItem itemLabel="Selecione..." itemValue="#{null}" noSelectionOption="true" />
 								<f:selectItems value="#{livroBean.generos}" />
 							</p:selectOneMenu>
 						</f:facet>
-						<h:outputText value="#{livro.genero}" />
+						<h:outputText value="#{livro.genero}"  />
 					</p:column>
-					<p:column headerText="ISBN" sortBy="#{livro.isbn}">
+					<p:column headerText="ISBN" sortBy="#{livro.isbn}" style="text-align: center">
 						<h:outputText value="#{livro.isbn}" />
 					</p:column>
 					<p:column headerText="Preço">
-						<h:outputText value="#{livro.preco}">
+						<h:outputText value="#{livro.preco}" >
 							<f:convertNumber type="currency" pattern="R$ #0.00" currencySymbol="R$" locale="pt_BR" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Data">
+					<p:column headerText="Data" >
 						<h:outputText value="#{livro.getDataLancamento()}" pattern="dd/MM/yyyy" mask="true"
 							converter="localDateConverter" style="width: 100%;" />
 					</p:column>
-					<p:column headerText="Alterar">
-						<p:commandLink value="Alterar" update="livros" process="@this">
-							<f:setPropertyActionListener target="#{livroBean.livro}" value="#{livro}" />
-						</p:commandLink>
-					</p:column>
-					<p:column headerText="Remover">
-						<p:commandLink value="Remover" action="#{livroBean.remover(livro)}" update="tabelaLivros"
-							process="@this" />
-					</p:column>
+
 				</p:dataTable>
 			</h:form>
 
