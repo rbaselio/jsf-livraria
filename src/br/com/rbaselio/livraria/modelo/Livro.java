@@ -97,5 +97,7 @@ public class Livro implements Serializable {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
+	
+	
 
 }
