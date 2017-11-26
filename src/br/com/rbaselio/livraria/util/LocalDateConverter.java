@@ -9,16 +9,19 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter(value = "localDateConverter")
-public class LocalDateConverter implements Converter<LocalDate> {
+public class LocalDateConverter implements Converter {
 
 	public LocalDate getAsObject(FacesContext context, UIComponent component, String value) {
 
 		return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 
-	public String getAsString(FacesContext context, UIComponent component, LocalDate value) {
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		LocalDate ld = (LocalDate) value;
 
-		return value.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		return ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
+
+	
 
 }
