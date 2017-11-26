@@ -1,19 +1,22 @@
 package br.com.rbaselio.livraria.bean;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import java.io.Serializable;
 
-@ManagedBean
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
+@Named
 @SessionScoped
-public class TemaBean {
+public class TemaBean implements Serializable {
 
-    private String tema = "omega";
+	private static final long serialVersionUID = 785030565808779082L;
+	private String tema = "omega";
 
-    public String getTema() {
-        return tema;
-    }
+	public String getTema() {
+		return tema;
+	}
 
-    public void setTema(String tema) {
-        this.tema = tema;
-    }
+	public void setTema(String tema) {
+		this.tema = tema;
+	}
 }

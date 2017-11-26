@@ -3,20 +3,23 @@ package br.com.rbaselio.livraria.modelo;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import br.com.rbaselio.livraria.dao.DAO;
+import br.com.rbaselio.livraria.dao.LivroDao;
 
 public class LivroDataModel extends LazyDataModel<Livro>{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5901855682971158988L;
-	DAO<Livro> dao = new DAO<Livro>(Livro.class);
 	
-	public LivroDataModel() {
+	@Inject
+	private LivroDao dao;
+	
+	@PostConstruct
+	public void init() {		
 	    super.setRowCount(dao.quantidadeDeElementos());
 	}
 	

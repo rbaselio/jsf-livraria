@@ -1,24 +1,27 @@
 package br.com.rbaselio.livraria.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import br.com.rbaselio.livraria.dao.DAO;
+import br.com.rbaselio.livraria.dao.AutorDao;
 import br.com.rbaselio.livraria.modelo.Autor;
-import br.com.rbaselio.livraria.modelo.Livro;
-import br.com.rbaselio.livraria.util.RedirectView;
 
-@SuppressWarnings({ "unused", "deprecation" })
-@ManagedBean(name = "autorBean")
+@Named
 @ViewScoped
-public class AutorBean {
+public class AutorBean implements Serializable {
 
+	private static final long serialVersionUID = 2377084533515043600L;
 	private Autor autor = new Autor();
 	private Integer autorId;
+	
+	@Inject
+	private AutorDao dao;	
 
 	public Integer getAutorId() {
 		return autorId;
@@ -35,16 +38,16 @@ public class AutorBean {
 	public void gravar() {
 
 		if (this.autor.getId() == null) {
-			new DAO<Autor>(Autor.class).adiciona(this.autor);
+			dao.adiciona(this.autor);
 		} else {
-			new DAO<Autor>(Autor.class).atualiza(this.autor);
+			dao.atualiza(this.autor);
 		}
 		this.autor = new Autor();
 		// return null;
 	}
 
 	public void carregaPelaId() {
-		this.autor = new DAO<Autor>(Autor.class).buscaPorId(autorId);
+		this.autor = dao.buscaPorId(autorId);
 
 	}
 
@@ -54,14 +57,14 @@ public class AutorBean {
 
 	public void remover(Autor autor) {
 		try {
-			new DAO<Autor>(Autor.class).remove(autor);
+			dao.remove(autor);
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Autor atribuido a um livro, não pode ser removido"));
 		}
 	}
 
 	public List<Autor> getAutores() {
-		return new DAO<Autor>(Autor.class).listaTodos();
+		return dao.listaTodos();
 	}
 
 }

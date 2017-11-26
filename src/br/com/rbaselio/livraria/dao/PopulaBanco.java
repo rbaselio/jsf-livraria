@@ -3,22 +3,23 @@ package br.com.rbaselio.livraria.dao;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.com.rbaselio.livraria.modelo.Autor;
 import br.com.rbaselio.livraria.modelo.Livro;
 
 public class PopulaBanco {
+	
+	@Inject
+	private static EntityManager em;
 
 	public static void main(String[] args) {
-
 		popular();
 
 	}
 
 	public static void popular() {
-		EntityManager em = new JPAUtil().getEntityManager();
-
 		em.getTransaction().begin();
 
 		Autor assis = geraAutor("Machado de Assis");		

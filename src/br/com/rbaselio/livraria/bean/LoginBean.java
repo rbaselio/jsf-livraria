@@ -1,27 +1,31 @@
 package br.com.rbaselio.livraria.bean;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import java.io.Serializable;
 
-import br.com.rbaselio.livraria.dao.UsuarioDao;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import br.com.rbaselio.livraria.modelo.Usuario;
 import br.com.rbaselio.livraria.util.RedirectView;
 
-@SuppressWarnings("deprecation")
-@ManagedBean
+@Named
 @ViewScoped
-public class LoginBean {
+public class LoginBean implements Serializable{
 
-	private Usuario usuario = new Usuario();
+	private static final long serialVersionUID = 3852723270938118526L;
+	
+	@Inject
+	private Usuario usuario;
 
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
 	public RedirectView efetuaLogin() {
-		this.usuario = new UsuarioDao().existe(this.usuario);
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		if(usuario != null ) {			
 			context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);	
