@@ -21,7 +21,7 @@ public class Livro implements Serializable {
 	private static final long serialVersionUID = 5949873384732086160L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
 	private String titulo;
@@ -32,7 +32,7 @@ public class Livro implements Serializable {
 	
 	private LocalDate dataLancamento = LocalDate.now();
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	private List<Autor> autores = new ArrayList<Autor>();
 
 	public LocalDate getDataLancamento() {

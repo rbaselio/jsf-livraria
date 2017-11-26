@@ -17,6 +17,7 @@ import br.com.rbaselio.livraria.dao.LivroDao;
 import br.com.rbaselio.livraria.modelo.Autor;
 import br.com.rbaselio.livraria.modelo.Livro;
 import br.com.rbaselio.livraria.modelo.LivroDataModel;
+import br.com.rbaselio.livraria.tx.Transacional;
 import br.com.rbaselio.livraria.util.RedirectView;
 
 @Named
@@ -34,6 +35,9 @@ public class LivroBean implements Serializable {
 	
 	@Inject
 	private AutorDao autorDao;	
+	
+	@Inject
+	FacesContext context;
 	
 	@Inject
 	private LivroDataModel livroDataModel;
@@ -55,7 +59,7 @@ public class LivroBean implements Serializable {
 	}
 
 	public void setLivro(Livro livro) {
-		this.livro = livro;
+		this.livro = livroDao.buscaPorId(livro.getId());
 	}
 
 	public List<Autor> getAutores() {
@@ -84,10 +88,11 @@ public class LivroBean implements Serializable {
 		System.out.println("Chamanda o formulario do Autor");
 		return new RedirectView("autor");
 	}
-
+	
+	@Transacional
 	public void gravar() {
 		if (livro.getAutores().isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage("autor",
+			context.addMessage("autor",
 					new FacesMessage("Livro deve ter pelo menos um Autor"));
 			return;
 		}
@@ -102,6 +107,7 @@ public class LivroBean implements Serializable {
 
 	}
 
+	@Transacional
 	public void remover(Livro livro) {
 		System.out.println("Removendo livro " + livro.getTitulo());
 		livroDao.remove(livro);

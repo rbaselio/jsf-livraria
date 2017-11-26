@@ -19,14 +19,16 @@ public class LoginBean implements Serializable{
 	
 	@Inject
 	private Usuario usuario;
+	
+	@Inject
+	FacesContext context;
 
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	public RedirectView efetuaLogin() {
+	public RedirectView efetuaLogin() {		
 		
-		FacesContext context = FacesContext.getCurrentInstance();
 		if(usuario != null ) {			
 			context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);	
 			return new RedirectView("livro");
@@ -37,11 +39,8 @@ public class LoginBean implements Serializable{
 		
 	}
 	
-	public RedirectView efetuaLogoff() {
-
-	    FacesContext context = FacesContext.getCurrentInstance();
+	public RedirectView efetuaLogoff() {	    
 	    context.getExternalContext().getSessionMap().remove("usuarioLogado");
-
 	    return new RedirectView("login");
 	}
 

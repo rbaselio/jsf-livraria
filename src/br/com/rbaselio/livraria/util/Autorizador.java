@@ -11,10 +11,12 @@ import br.com.rbaselio.livraria.modelo.Usuario;
 public class Autorizador implements PhaseListener {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	@Override
-	public void afterPhase(PhaseEvent event) {
-		FacesContext context = event.getFacesContext();
+	public void afterPhase(PhaseEvent event) {	
+		
+		FacesContext context = FacesContext.getCurrentInstance();
 		String nomePagina = context.getViewRoot().getViewId();
 		if ("/login.xhtml".equals(nomePagina)) {
 			return;

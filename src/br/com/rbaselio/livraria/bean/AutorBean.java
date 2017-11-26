@@ -11,6 +11,8 @@ import javax.inject.Named;
 
 import br.com.rbaselio.livraria.dao.AutorDao;
 import br.com.rbaselio.livraria.modelo.Autor;
+import br.com.rbaselio.livraria.tx.Transacional;
+import br.com.rbaselio.livraria.util.RedirectView;
 
 @Named
 @ViewScoped
@@ -21,7 +23,10 @@ public class AutorBean implements Serializable {
 	private Integer autorId;
 	
 	@Inject
-	private AutorDao dao;	
+	private AutorDao dao;
+	
+	@Inject
+	FacesContext context;
 
 	public Integer getAutorId() {
 		return autorId;
@@ -35,7 +40,8 @@ public class AutorBean implements Serializable {
 		return autor;
 	}
 
-	public void gravar() {
+	@Transacional
+	public RedirectView gravar() {
 
 		if (this.autor.getId() == null) {
 			dao.adiciona(this.autor);
@@ -43,7 +49,7 @@ public class AutorBean implements Serializable {
 			dao.atualiza(this.autor);
 		}
 		this.autor = new Autor();
-		// return null;
+		 return new RedirectView("livro");
 	}
 
 	public void carregaPelaId() {
@@ -54,12 +60,13 @@ public class AutorBean implements Serializable {
 	public void carregar(Autor autor) {
 		this.autor = autor;
 	}
-
+	
+	@Transacional
 	public void remover(Autor autor) {
 		try {
 			dao.remove(autor);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Autor atribuido a um livro, não pode ser removido"));
+			context.addMessage("autor", new FacesMessage("Autor atribuido a um livro, não pode ser removido"));
 		}
 	}
 

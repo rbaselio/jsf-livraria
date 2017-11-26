@@ -5,14 +5,15 @@ import java.time.format.DateTimeFormatter;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 
 import br.com.rbaselio.livraria.modelo.Autor;
 import br.com.rbaselio.livraria.modelo.Livro;
 
 public class PopulaBanco {
 	
-	@Inject
-	private static EntityManager em;
+	
+	private static EntityManager em = Persistence.createEntityManagerFactory("livraria").createEntityManager();
 
 	public static void main(String[] args) {
 		popular();

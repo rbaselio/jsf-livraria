@@ -31,9 +31,11 @@ public class GeradorRelatorio implements Serializable{
 	
 	@Inject
 	private LivroDao dao;
+	@Inject
+	FacesContext context;
 
 	public void geraPDFParaOutputStream() {
-		FacesContext context = FacesContext.getCurrentInstance();
+		
 		ExternalContext externalContext = context.getExternalContext();
         ServletContext contextS = (ServletContext) externalContext.getContext();
         HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();

@@ -1,3 +1,5 @@
-<!-- WebContent/WEB-INF/beans.xml -->
 <beans>
+    <interceptors>
+        <class>br.com.rbaselio.livraria.tx.GerenciadorDeTransacao</class>
+    </interceptors>
 </beans>
